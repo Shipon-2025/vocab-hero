@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Vocab Hero - The Ultimate English Vocabulary App
 
 A comprehensive Flutter application designed to help Bangladeshi learners master English vocabulary through gamified learning experiences.
