@@ -31,30 +31,48 @@ class BaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget card = Card(
-      color: backgroundColor ?? AppColors.surface,
-      elevation: elevation ?? 2,
-      shadowColor: AppColors.textPrimary.withOpacity(0.1),
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(16),
-      ),
+    Widget card = Container(
       margin: margin ?? const EdgeInsets.all(8),
-      child: InkWell(
-        onTap: onTap != null ? _handleTap : null,
-        borderRadius: borderRadius ?? BorderRadius.circular(16),
-        child: Padding(
-          padding: padding ?? const EdgeInsets.all(16),
-          child: child,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? AppColors.surface,
+        borderRadius: borderRadius ?? BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.textPrimary.withOpacity(0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+          BoxShadow(
+            color: AppColors.textPrimary.withOpacity(0.04),
+            blurRadius: 40,
+            offset: const Offset(0, 16),
+          ),
+        ],
+        border: Border.all(
+          color: AppColors.textPrimary.withOpacity(0.05),
+          width: 1,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap != null ? _handleTap : null,
+          borderRadius: borderRadius ?? BorderRadius.circular(20),
+          child: Padding(
+            padding: padding ?? const EdgeInsets.all(20),
+            child: child,
+          ),
         ),
       ),
     );
-    
+
     if (animated) {
       return card.animate()
-        .fadeIn(duration: 300.ms)
-        .slideY(begin: 0.1, duration: 300.ms, curve: Curves.easeOut);
+        .fadeIn(duration: 400.ms)
+        .slideY(begin: 0.1, duration: 400.ms, curve: Curves.easeOutCubic)
+        .scale(begin: const Offset(0.95, 0.95), duration: 400.ms, curve: Curves.easeOutCubic);
     }
-    
+
     return card;
   }
   
@@ -195,10 +213,44 @@ class WordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseCard(
-      onTap: onTap,
-      animated: true,
-      padding: const EdgeInsets.all(20),
+    return Container(
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.surface,
+            AppColors.surface.withOpacity(0.9),
+            AppColors.surfaceVariant.withOpacity(0.3),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.1),
+            blurRadius: 30,
+            offset: const Offset(0, 15),
+          ),
+          BoxShadow(
+            color: AppColors.textPrimary.withOpacity(0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+        border: Border.all(
+          color: AppColors.primary.withOpacity(0.1),
+          width: 1.5,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(24),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -225,21 +277,59 @@ class WordCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  IconButton(
-                    onPressed: onPronounce,
-                    icon: const Icon(Icons.volume_up),
-                    color: AppColors.primary,
-                    style: IconButton.styleFrom(
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: AppColors.primaryGradient,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      onPressed: onPronounce,
+                      icon: const Icon(Icons.volume_up),
+                      color: AppColors.textOnPrimary,
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    onPressed: onBookmark,
-                    icon: Icon(
-                      isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  const SizedBox(width: 12),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: isBookmarked
+                          ? AppColors.secondaryGradient
+                          : LinearGradient(
+                              colors: [
+                                AppColors.surfaceVariant,
+                                AppColors.surfaceVariant.withOpacity(0.8),
+                              ],
+                            ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: isBookmarked ? [
+                        BoxShadow(
+                          color: AppColors.secondary.withOpacity(0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ] : null,
                     ),
-                    color: isBookmarked ? AppColors.secondary : AppColors.textTertiary,
+                    child: IconButton(
+                      onPressed: onBookmark,
+                      icon: Icon(
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      ),
+                      color: isBookmarked
+                          ? AppColors.textPrimary
+                          : AppColors.textTertiary,
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -312,62 +402,123 @@ class QuickActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseCard(
-      onTap: onTap,
-      animated: true,
-      backgroundColor: backgroundColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 20,
-                ),
-              ),
-              const Spacer(),
-              if (badge != null)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.accent,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    badge!,
-                    style: AppTypography.labelSmall.copyWith(
-                      color: AppColors.textOnPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-            ],
+    return Container(
+      margin: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            backgroundColor,
+            backgroundColor.withOpacity(0.8),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: iconColor.withOpacity(0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            style: AppTypography.titleMedium.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: AppTypography.bodySmall,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          BoxShadow(
+            color: AppColors.textPrimary.withOpacity(0.05),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
           ),
         ],
+        border: Border.all(
+          color: iconColor.withOpacity(0.1),
+          width: 1,
+        ),
       ),
-    );
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            iconColor.withOpacity(0.2),
+                            iconColor.withOpacity(0.1),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: iconColor.withOpacity(0.2),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        icon,
+                        color: iconColor,
+                        size: 24,
+                      ),
+                    ),
+                    const Spacer(),
+                    if (badge != null)
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          gradient: AppColors.accentGradient,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.accent.withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          badge!,
+                          style: AppTypography.labelSmall.copyWith(
+                            color: AppColors.textOnPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  title,
+                  style: AppTypography.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  subtitle,
+                  style: AppTypography.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ).animate()
+      .fadeIn(duration: 400.ms)
+      .slideY(begin: 0.1, duration: 400.ms, curve: Curves.easeOutCubic)
+      .scale(begin: const Offset(0.95, 0.95), duration: 400.ms, curve: Curves.easeOutCubic);
   }
 }

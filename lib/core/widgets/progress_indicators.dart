@@ -57,19 +57,43 @@ class XPProgressBar extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor ?? AppColors.xpBarBackground,
             borderRadius: BorderRadius.circular(height / 2),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.textPrimary.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(height / 2),
-            child: LinearProgressIndicator(
-              value: progress,
-              backgroundColor: Colors.transparent,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                fillColor ?? AppColors.xpBarFill,
-              ),
+            child: Stack(
+              children: [
+                LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: Colors.transparent,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    fillColor ?? AppColors.xpBarFill,
+                  ),
+                ),
+                // Shimmer effect
+                if (animated)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: AppColors.shimmerGradient,
+                        borderRadius: BorderRadius.circular(height / 2),
+                      ),
+                    ).animate(onPlay: (controller) => controller.repeat())
+                      .slideX(duration: 1500.ms, begin: -1, end: 1),
+                  ),
+              ],
             ),
           ),
         ).animate(target: animated ? 1 : 0)
-          .scaleX(duration: 600.ms, curve: Curves.easeOutBack),
+          .scaleX(duration: 800.ms, curve: Curves.easeOutBack)
+          .then()
+          .shimmer(duration: 2000.ms, color: (fillColor ?? AppColors.xpBarFill).withOpacity(0.3)),
       ],
     );
   }

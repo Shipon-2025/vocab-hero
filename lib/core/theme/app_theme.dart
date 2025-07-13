@@ -49,22 +49,25 @@ class AppTheme {
       
       // App Bar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
-        scrolledUnderElevation: 1,
+        scrolledUnderElevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
-        titleTextStyle: AppTypography.headlineSmall,
+        titleTextStyle: AppTypography.headlineSmall.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
         centerTitle: true,
+        shadowColor: Colors.transparent,
       ),
       
       // Card Theme
       cardTheme: CardTheme(
         color: AppColors.surface,
-        elevation: 2,
-        shadowColor: AppColors.textPrimary.withOpacity(0.1),
+        elevation: 0,
+        shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
         ),
         margin: const EdgeInsets.all(8),
       ),

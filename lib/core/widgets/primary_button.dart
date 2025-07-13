@@ -74,25 +74,52 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDisabled = !isEnabled || isLoading || onPressed == null;
-    
+
     return SizedBox(
       width: width,
       height: height ?? 56,
-      child: ElevatedButton(
-        onPressed: isDisabled ? null : _handlePress,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColors.primary,
-          foregroundColor: textColor ?? AppColors.textOnPrimary,
-          disabledBackgroundColor: AppColors.border,
-          disabledForegroundColor: AppColors.textTertiary,
-          elevation: isDisabled ? 0 : 2,
-          shadowColor: (backgroundColor ?? AppColors.primary).withOpacity(0.3),
-          shape: RoundedRectangleBorder(
-            borderRadius: borderRadius ?? BorderRadius.circular(12),
-          ),
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: isDisabled
+              ? null
+              : LinearGradient(
+                  colors: [
+                    backgroundColor ?? AppColors.primary,
+                    (backgroundColor ?? AppColors.primary).withOpacity(0.8),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+          borderRadius: borderRadius ?? BorderRadius.circular(16),
+          boxShadow: isDisabled ? null : [
+            BoxShadow(
+              color: (backgroundColor ?? AppColors.primary).withOpacity(0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            ),
+            BoxShadow(
+              color: (backgroundColor ?? AppColors.primary).withOpacity(0.1),
+              blurRadius: 24,
+              offset: const Offset(0, 12),
+            ),
+          ],
         ),
-        child: _buildButtonContent(),
+        child: ElevatedButton(
+          onPressed: isDisabled ? null : _handlePress,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: isDisabled ? AppColors.border : Colors.transparent,
+            foregroundColor: textColor ?? AppColors.textOnPrimary,
+            disabledBackgroundColor: AppColors.border,
+            disabledForegroundColor: AppColors.textTertiary,
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: borderRadius ?? BorderRadius.circular(16),
+            ),
+            padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          ),
+          child: _buildButtonContent(),
+        ),
       ),
     );
   }

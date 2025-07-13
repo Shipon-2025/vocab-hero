@@ -14,16 +14,25 @@ class HomeHeader extends StatelessWidget {
     return Consumer<UserProvider>(
       builder: (context, userProvider, child) {
         return Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 AppColors.primary,
-                AppColors.primary.withOpacity(0.8),
+                AppColors.primaryLight,
+                const Color(0xFF4DD0E1),
               ],
+              stops: const [0.0, 0.6, 1.0],
             ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withOpacity(0.3),
+                blurRadius: 30,
+                offset: const Offset(0, 15),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,23 +42,39 @@ class HomeHeader extends StatelessWidget {
                 children: [
                   // User Avatar
                   Container(
-                    width: 50,
-                    height: 50,
+                    width: 56,
+                    height: 56,
                     decoration: BoxDecoration(
-                      color: AppColors.textOnPrimary,
-                      borderRadius: BorderRadius.circular(25),
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.textOnPrimary,
+                          AppColors.textOnPrimary.withOpacity(0.9),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(28),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primaryDark.withOpacity(0.3),
+                          color: AppColors.primaryDark.withOpacity(0.4),
+                          blurRadius: 16,
+                          offset: const Offset(0, 8),
+                        ),
+                        BoxShadow(
+                          color: AppColors.textOnPrimary.withOpacity(0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 4),
                         ),
                       ],
+                      border: Border.all(
+                        color: AppColors.textOnPrimary.withOpacity(0.2),
+                        width: 2,
+                      ),
                     ),
                     child: Icon(
                       Icons.person,
                       color: AppColors.primary,
-                      size: 28,
+                      size: 32,
                     ),
                   )
                     .animate()
@@ -89,10 +114,21 @@ class HomeHeader extends StatelessWidget {
                     children: [
                       // Gems
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                         decoration: BoxDecoration(
-                          color: AppColors.secondary,
-                          borderRadius: BorderRadius.circular(20),
+                          gradient: AppColors.secondaryGradient,
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.secondary.withOpacity(0.4),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: AppColors.textOnPrimary.withOpacity(0.2),
+                            width: 1,
+                          ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -100,9 +136,9 @@ class HomeHeader extends StatelessWidget {
                             Icon(
                               Icons.diamond,
                               color: AppColors.textPrimary,
-                              size: 16,
+                              size: 18,
                             ),
-                            const SizedBox(width: 4),
+                            const SizedBox(width: 6),
                             Text(
                               '${userProvider.gemsCount}',
                               style: AppTypography.labelMedium.copyWith(
@@ -135,14 +171,21 @@ class HomeHeader extends StatelessWidget {
               
               // XP Progress Bar
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.textOnPrimary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  gradient: AppColors.glassGradient,
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: AppColors.textOnPrimary.withOpacity(0.2),
-                    width: 1,
+                    color: AppColors.textOnPrimary.withOpacity(0.3),
+                    width: 1.5,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.textOnPrimary.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
                 ),
                 child: XPProgressBar(
                   currentXP: userProvider.currentXP,

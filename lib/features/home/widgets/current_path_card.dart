@@ -16,8 +16,37 @@ class CurrentPathCard extends StatelessWidget {
       builder: (context, userProvider, child) {
         final goalInfo = _getGoalInfo(userProvider.primaryGoal);
         
-        return BaseCard(
-          padding: const EdgeInsets.all(20),
+        return Container(
+          margin: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.surface,
+                AppColors.surface.withOpacity(0.8),
+                AppColors.surfaceVariant.withOpacity(0.3),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: goalInfo.color.withOpacity(0.15),
+                blurRadius: 30,
+                offset: const Offset(0, 15),
+              ),
+              BoxShadow(
+                color: AppColors.textPrimary.withOpacity(0.08),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
+            border: Border.all(
+              color: goalInfo.color.withOpacity(0.1),
+              width: 1.5,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -25,16 +54,27 @@ class CurrentPathCard extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 56,
+                    height: 56,
                     decoration: BoxDecoration(
                       gradient: goalInfo.gradient,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: goalInfo.color.withOpacity(0.4),
+                          blurRadius: 16,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: AppColors.textOnPrimary.withOpacity(0.2),
+                        width: 1,
+                      ),
                     ),
                     child: Icon(
                       goalInfo.icon,
                       color: AppColors.textOnPrimary,
-                      size: 24,
+                      size: 28,
                     ),
                   ),
                   const SizedBox(width: 12),

@@ -42,23 +42,53 @@ class AppColors {
   static const Color warning = Color(0xFFF39C12);
   static const Color info = Color(0xFF3498DB);
   
-  // Gradient Colors
+  // Enhanced Gradient Colors
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [primary, primaryLight],
+    colors: [primary, primaryLight, Color(0xFF4DD0E1)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
+    stops: [0.0, 0.6, 1.0],
   );
-  
+
   static const LinearGradient successGradient = LinearGradient(
-    colors: [success, successLight],
+    colors: [success, successLight, Color(0xFFA4E869)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [0.0, 0.6, 1.0],
+  );
+
+  static const LinearGradient accentGradient = LinearGradient(
+    colors: [accent, accentLight, Color(0xFFFF9A9E)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [0.0, 0.6, 1.0],
+  );
+
+  static const LinearGradient secondaryGradient = LinearGradient(
+    colors: [secondary, Color(0xFFFFE066), Color(0xFFFFF176)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [0.0, 0.6, 1.0],
+  );
+
+  // Glass morphism gradients
+  static const LinearGradient glassGradient = LinearGradient(
+    colors: [
+      Color(0x20FFFFFF),
+      Color(0x10FFFFFF),
+    ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
-  
-  static const LinearGradient accentGradient = LinearGradient(
-    colors: [accent, accentLight],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
+
+  // Shimmer gradient
+  static const LinearGradient shimmerGradient = LinearGradient(
+    colors: [
+      Color(0x00FFFFFF),
+      Color(0x40FFFFFF),
+      Color(0x00FFFFFF),
+    ],
+    stops: [0.0, 0.5, 1.0],
   );
   
   // XP & Level Colors

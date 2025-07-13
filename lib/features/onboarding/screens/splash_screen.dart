@@ -44,33 +44,61 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // App Logo/Mascot
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: AppColors.textOnPrimary,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primaryDark.withOpacity(0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.primary,
+              AppColors.primaryLight,
+              Color(0xFF4DD0E1),
+            ],
+            stops: [0.0, 0.6, 1.0],
+          ),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // App Logo/Mascot
+                Container(
+                  width: 140,
+                  height: 140,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.textOnPrimary,
+                        AppColors.textOnPrimary.withOpacity(0.95),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.school,
-                  size: 60,
-                  color: AppColors.primary,
-                ),
-              )
+                    borderRadius: BorderRadius.circular(35),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryDark.withOpacity(0.4),
+                        blurRadius: 30,
+                        offset: const Offset(0, 15),
+                      ),
+                      BoxShadow(
+                        color: AppColors.textOnPrimary.withOpacity(0.3),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                    border: Border.all(
+                      color: AppColors.textOnPrimary.withOpacity(0.2),
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.school,
+                    size: 70,
+                    color: AppColors.primary,
+                  ),
+                )
                 .animate()
                 .scale(
                   duration: 800.ms,
@@ -113,18 +141,26 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(height: 64),
               
               // Loading Indicator
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.textOnPrimary.withOpacity(0.8),
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColors.textOnPrimary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.textOnPrimary.withOpacity(0.9),
+                    ),
                   ),
                 ),
               )
                 .animate()
-                .fadeIn(delay: 1200.ms, duration: 400.ms),
+                .fadeIn(delay: 1200.ms, duration: 400.ms)
+                .scale(delay: 1200.ms, duration: 600.ms, curve: Curves.elasticOut),
             ],
           ),
         ),
